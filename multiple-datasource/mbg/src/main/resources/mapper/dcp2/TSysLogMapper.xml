@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.mogu.blog.mbg.mapper.TSysLogMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.mogu.blog.mbg.entity.TSysLog">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="admin_uid" jdbcType="VARCHAR" property="adminUid" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="class_path" jdbcType="VARCHAR" property="classPath" />
+    <result column="method" jdbcType="VARCHAR" property="method" />
+    <result column="operation" jdbcType="VARCHAR" property="operation" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="ip_source" jdbcType="VARCHAR" property="ipSource" />
+    <result column="spend_time" jdbcType="INTEGER" property="spendTime" />
+    <result column="params" jdbcType="LONGVARCHAR" property="params" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_sys_log
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.mogu.blog.mbg.entity.TSysLog">
+    insert into t_sys_log (`uid`, user_name, admin_uid, 
+      ip, url, `type`, class_path, 
+      `method`, `operation`, `status`, 
+      create_time, update_time, ip_source, 
+      spend_time, params)
+    values (#{uid,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{adminUid,jdbcType=VARCHAR}, 
+      #{ip,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{classPath,jdbcType=VARCHAR}, 
+      #{method,jdbcType=VARCHAR}, #{operation,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{ipSource,jdbcType=VARCHAR}, 
+      #{spendTime,jdbcType=INTEGER}, #{params,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.mogu.blog.mbg.entity.TSysLog">
+    update t_sys_log
+    set user_name = #{userName,jdbcType=VARCHAR},
+      admin_uid = #{adminUid,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=VARCHAR},
+      class_path = #{classPath,jdbcType=VARCHAR},
+      `method` = #{method,jdbcType=VARCHAR},
+      `operation` = #{operation,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      ip_source = #{ipSource,jdbcType=VARCHAR},
+      spend_time = #{spendTime,jdbcType=INTEGER},
+      params = #{params,jdbcType=LONGVARCHAR}
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select `uid`, user_name, admin_uid, ip, url, `type`, class_path, `method`, `operation`, 
+    `status`, create_time, update_time, ip_source, spend_time, params
+    from t_sys_log
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select `uid`, user_name, admin_uid, ip, url, `type`, class_path, `method`, `operation`, 
+    `status`, create_time, update_time, ip_source, spend_time, params
+    from t_sys_log
+  </select>
+</mapper>

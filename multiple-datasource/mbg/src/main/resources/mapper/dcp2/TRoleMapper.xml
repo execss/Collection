@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.mogu.blog.mbg.mapper.TRoleMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.mogu.blog.mbg.entity.TRole">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="category_menu_uids" jdbcType="LONGVARCHAR" property="categoryMenuUids" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_role
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.mogu.blog.mbg.entity.TRole">
+    insert into t_role (`uid`, role_name, create_time, 
+      update_time, `status`, summary, 
+      category_menu_uids)
+    values (#{uid,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, #{summary,jdbcType=VARCHAR}, 
+      #{categoryMenuUids,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.mogu.blog.mbg.entity.TRole">
+    update t_role
+    set role_name = #{roleName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=TINYINT},
+      summary = #{summary,jdbcType=VARCHAR},
+      category_menu_uids = #{categoryMenuUids,jdbcType=LONGVARCHAR}
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select `uid`, role_name, create_time, update_time, `status`, summary, category_menu_uids
+    from t_role
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select `uid`, role_name, create_time, update_time, `status`, summary, category_menu_uids
+    from t_role
+  </select>
+</mapper>

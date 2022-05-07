@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.mogu.blog.mbg.mapper.TTodoMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.mogu.blog.mbg.entity.TTodo">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="admin_uid" jdbcType="VARCHAR" property="adminUid" />
+    <result column="text" jdbcType="VARCHAR" property="text" />
+    <result column="done" jdbcType="TINYINT" property="done" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_todo
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.mogu.blog.mbg.entity.TTodo">
+    insert into t_todo (`uid`, admin_uid, `text`, 
+      done, `status`, create_time, 
+      update_time)
+    values (#{uid,jdbcType=VARCHAR}, #{adminUid,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, 
+      #{done,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.mogu.blog.mbg.entity.TTodo">
+    update t_todo
+    set admin_uid = #{adminUid,jdbcType=VARCHAR},
+      `text` = #{text,jdbcType=VARCHAR},
+      done = #{done,jdbcType=TINYINT},
+      `status` = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select `uid`, admin_uid, `text`, done, `status`, create_time, update_time
+    from t_todo
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select `uid`, admin_uid, `text`, done, `status`, create_time, update_time
+    from t_todo
+  </select>
+</mapper>

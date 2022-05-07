@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.x.blog.mbg.mapper.TbPageMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.x.blog.mbg.entity.TbPage">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="page_name" jdbcType="VARCHAR" property="pageName" />
+    <result column="page_label" jdbcType="VARCHAR" property="pageLabel" />
+    <result column="page_cover" jdbcType="VARCHAR" property="pageCover" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_page
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.x.blog.mbg.entity.TbPage">
+    insert into tb_page (id, page_name, page_label, 
+      page_cover, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{pageName,jdbcType=VARCHAR}, #{pageLabel,jdbcType=VARCHAR}, 
+      #{pageCover,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.x.blog.mbg.entity.TbPage">
+    update tb_page
+    set page_name = #{pageName,jdbcType=VARCHAR},
+      page_label = #{pageLabel,jdbcType=VARCHAR},
+      page_cover = #{pageCover,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, page_name, page_label, page_cover, create_time, update_time
+    from tb_page
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, page_name, page_label, page_cover, create_time, update_time
+    from tb_page
+  </select>
+</mapper>

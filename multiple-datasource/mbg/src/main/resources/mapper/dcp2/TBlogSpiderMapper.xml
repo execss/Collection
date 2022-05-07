@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.mogu.blog.mbg.mapper.TBlogSpiderMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.mogu.blog.mbg.entity.TBlogSpider">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="tag_uid" jdbcType="VARCHAR" property="tagUid" />
+    <result column="click_count" jdbcType="INTEGER" property="clickCount" />
+    <result column="collect_count" jdbcType="INTEGER" property="collectCount" />
+    <result column="file_uid" jdbcType="VARCHAR" property="fileUid" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="admin_uid" jdbcType="VARCHAR" property="adminUid" />
+    <result column="is_original" jdbcType="VARCHAR" property="isOriginal" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="articles_part" jdbcType="VARCHAR" property="articlesPart" />
+    <result column="blog_sort_uid" jdbcType="VARCHAR" property="blogSortUid" />
+    <result column="level" jdbcType="BIT" property="level" />
+    <result column="is_publish" jdbcType="VARCHAR" property="isPublish" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_blog_spider
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.mogu.blog.mbg.entity.TBlogSpider">
+    insert into t_blog_spider (`uid`, title, summary, 
+      tag_uid, click_count, collect_count, 
+      file_uid, `status`, create_time, 
+      update_time, admin_uid, is_original, 
+      author, articles_part, blog_sort_uid, 
+      `level`, is_publish, sort, 
+      content)
+    values (#{uid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, 
+      #{tagUid,jdbcType=VARCHAR}, #{clickCount,jdbcType=INTEGER}, #{collectCount,jdbcType=INTEGER}, 
+      #{fileUid,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{adminUid,jdbcType=VARCHAR}, #{isOriginal,jdbcType=VARCHAR}, 
+      #{author,jdbcType=VARCHAR}, #{articlesPart,jdbcType=VARCHAR}, #{blogSortUid,jdbcType=VARCHAR}, 
+      #{level,jdbcType=BIT}, #{isPublish,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.mogu.blog.mbg.entity.TBlogSpider">
+    update t_blog_spider
+    set title = #{title,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      tag_uid = #{tagUid,jdbcType=VARCHAR},
+      click_count = #{clickCount,jdbcType=INTEGER},
+      collect_count = #{collectCount,jdbcType=INTEGER},
+      file_uid = #{fileUid,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      admin_uid = #{adminUid,jdbcType=VARCHAR},
+      is_original = #{isOriginal,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      articles_part = #{articlesPart,jdbcType=VARCHAR},
+      blog_sort_uid = #{blogSortUid,jdbcType=VARCHAR},
+      `level` = #{level,jdbcType=BIT},
+      is_publish = #{isPublish,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select `uid`, title, summary, tag_uid, click_count, collect_count, file_uid, `status`, 
+    create_time, update_time, admin_uid, is_original, author, articles_part, blog_sort_uid, 
+    `level`, is_publish, sort, content
+    from t_blog_spider
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select `uid`, title, summary, tag_uid, click_count, collect_count, file_uid, `status`, 
+    create_time, update_time, admin_uid, is_original, author, articles_part, blog_sort_uid, 
+    `level`, is_publish, sort, content
+    from t_blog_spider
+  </select>
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.mogu.blog.mbg.mapper.TLinkMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.mogu.blog.mbg.entity.TLink">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="click_count" jdbcType="INTEGER" property="clickCount" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="link_status" jdbcType="BIT" property="linkStatus" />
+    <result column="user_uid" jdbcType="VARCHAR" property="userUid" />
+    <result column="admin_uid" jdbcType="VARCHAR" property="adminUid" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="file_uid" jdbcType="VARCHAR" property="fileUid" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_link
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.mogu.blog.mbg.entity.TLink">
+    insert into t_link (`uid`, title, summary, 
+      url, click_count, create_time, 
+      update_time, `status`, sort, 
+      link_status, user_uid, admin_uid, 
+      email, file_uid)
+    values (#{uid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{clickCount,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, #{sort,jdbcType=INTEGER}, 
+      #{linkStatus,jdbcType=BIT}, #{userUid,jdbcType=VARCHAR}, #{adminUid,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{fileUid,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.mogu.blog.mbg.entity.TLink">
+    update t_link
+    set title = #{title,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      click_count = #{clickCount,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=TINYINT},
+      sort = #{sort,jdbcType=INTEGER},
+      link_status = #{linkStatus,jdbcType=BIT},
+      user_uid = #{userUid,jdbcType=VARCHAR},
+      admin_uid = #{adminUid,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      file_uid = #{fileUid,jdbcType=VARCHAR}
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select `uid`, title, summary, url, click_count, create_time, update_time, `status`, 
+    sort, link_status, user_uid, admin_uid, email, file_uid
+    from t_link
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select `uid`, title, summary, url, click_count, create_time, update_time, `status`, 
+    sort, link_status, user_uid, admin_uid, email, file_uid
+    from t_link
+  </select>
+</mapper>

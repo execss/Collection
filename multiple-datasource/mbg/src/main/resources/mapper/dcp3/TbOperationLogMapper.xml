@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.x.blog.mbg.mapper.TbOperationLogMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.x.blog.mbg.entity.TbOperationLog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="opt_module" jdbcType="VARCHAR" property="optModule" />
+    <result column="opt_type" jdbcType="VARCHAR" property="optType" />
+    <result column="opt_url" jdbcType="VARCHAR" property="optUrl" />
+    <result column="opt_method" jdbcType="VARCHAR" property="optMethod" />
+    <result column="opt_desc" jdbcType="VARCHAR" property="optDesc" />
+    <result column="request_method" jdbcType="VARCHAR" property="requestMethod" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="ip_address" jdbcType="VARCHAR" property="ipAddress" />
+    <result column="ip_source" jdbcType="VARCHAR" property="ipSource" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="request_param" jdbcType="LONGVARCHAR" property="requestParam" />
+    <result column="response_data" jdbcType="LONGVARCHAR" property="responseData" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_operation_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.x.blog.mbg.entity.TbOperationLog">
+    insert into tb_operation_log (id, opt_module, opt_type, 
+      opt_url, opt_method, opt_desc, 
+      request_method, user_id, nickname, 
+      ip_address, ip_source, create_time, 
+      update_time, request_param, response_data
+      )
+    values (#{id,jdbcType=INTEGER}, #{optModule,jdbcType=VARCHAR}, #{optType,jdbcType=VARCHAR}, 
+      #{optUrl,jdbcType=VARCHAR}, #{optMethod,jdbcType=VARCHAR}, #{optDesc,jdbcType=VARCHAR}, 
+      #{requestMethod,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{nickname,jdbcType=VARCHAR}, 
+      #{ipAddress,jdbcType=VARCHAR}, #{ipSource,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{requestParam,jdbcType=LONGVARCHAR}, #{responseData,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.x.blog.mbg.entity.TbOperationLog">
+    update tb_operation_log
+    set opt_module = #{optModule,jdbcType=VARCHAR},
+      opt_type = #{optType,jdbcType=VARCHAR},
+      opt_url = #{optUrl,jdbcType=VARCHAR},
+      opt_method = #{optMethod,jdbcType=VARCHAR},
+      opt_desc = #{optDesc,jdbcType=VARCHAR},
+      request_method = #{requestMethod,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      ip_address = #{ipAddress,jdbcType=VARCHAR},
+      ip_source = #{ipSource,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      request_param = #{requestParam,jdbcType=LONGVARCHAR},
+      response_data = #{responseData,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, opt_module, opt_type, opt_url, opt_method, opt_desc, request_method, user_id, 
+    nickname, ip_address, ip_source, create_time, update_time, request_param, response_data
+    from tb_operation_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, opt_module, opt_type, opt_url, opt_method, opt_desc, request_method, user_id, 
+    nickname, ip_address, ip_source, create_time, update_time, request_param, response_data
+    from tb_operation_log
+  </select>
+</mapper>

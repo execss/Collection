@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.mogu.blog.mbg.mapper.TSubjectItemMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.mogu.blog.mbg.entity.TSubjectItem">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="subject_uid" jdbcType="VARCHAR" property="subjectUid" />
+    <result column="blog_uid" jdbcType="VARCHAR" property="blogUid" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_subject_item
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.mogu.blog.mbg.entity.TSubjectItem">
+    insert into t_subject_item (`uid`, subject_uid, blog_uid, 
+      `status`, sort, create_time, 
+      update_time)
+    values (#{uid,jdbcType=VARCHAR}, #{subjectUid,jdbcType=VARCHAR}, #{blogUid,jdbcType=VARCHAR}, 
+      #{status,jdbcType=BIT}, #{sort,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.mogu.blog.mbg.entity.TSubjectItem">
+    update t_subject_item
+    set subject_uid = #{subjectUid,jdbcType=VARCHAR},
+      blog_uid = #{blogUid,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=BIT},
+      sort = #{sort,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select `uid`, subject_uid, blog_uid, `status`, sort, create_time, update_time
+    from t_subject_item
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select `uid`, subject_uid, blog_uid, `status`, sort, create_time, update_time
+    from t_subject_item
+  </select>
+</mapper>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.mogu.blog.mbg.mapper.TUserMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.mogu.blog.mbg.entity.TUser">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="pass_word" jdbcType="VARCHAR" property="passWord" />
+    <result column="gender" jdbcType="TINYINT" property="gender" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="valid_code" jdbcType="VARCHAR" property="validCode" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="login_count" jdbcType="INTEGER" property="loginCount" />
+    <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="last_login_ip" jdbcType="VARCHAR" property="lastLoginIp" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="qq_number" jdbcType="VARCHAR" property="qqNumber" />
+    <result column="we_chat" jdbcType="VARCHAR" property="weChat" />
+    <result column="occupation" jdbcType="VARCHAR" property="occupation" />
+    <result column="comment_status" jdbcType="BIT" property="commentStatus" />
+    <result column="ip_source" jdbcType="VARCHAR" property="ipSource" />
+    <result column="browser" jdbcType="VARCHAR" property="browser" />
+    <result column="os" jdbcType="VARCHAR" property="os" />
+    <result column="start_email_notification" jdbcType="BIT" property="startEmailNotification" />
+    <result column="user_tag" jdbcType="BIT" property="userTag" />
+    <result column="loading_valid" jdbcType="BIT" property="loadingValid" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_user
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.mogu.blog.mbg.entity.TUser">
+    insert into t_user (`uid`, user_name, pass_word, 
+      gender, avatar, email, 
+      birthday, mobile, valid_code, 
+      summary, login_count, last_login_time, 
+      last_login_ip, `status`, create_time, 
+      update_time, nick_name, `source`, 
+      uuid, qq_number, we_chat, 
+      occupation, comment_status, ip_source, 
+      browser, os, start_email_notification, 
+      user_tag, loading_valid)
+    values (#{uid,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{passWord,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=TINYINT}, #{avatar,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=DATE}, #{mobile,jdbcType=VARCHAR}, #{validCode,jdbcType=VARCHAR}, 
+      #{summary,jdbcType=VARCHAR}, #{loginCount,jdbcType=INTEGER}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
+      #{lastLoginIp,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{nickName,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, 
+      #{uuid,jdbcType=VARCHAR}, #{qqNumber,jdbcType=VARCHAR}, #{weChat,jdbcType=VARCHAR}, 
+      #{occupation,jdbcType=VARCHAR}, #{commentStatus,jdbcType=BIT}, #{ipSource,jdbcType=VARCHAR}, 
+      #{browser,jdbcType=VARCHAR}, #{os,jdbcType=VARCHAR}, #{startEmailNotification,jdbcType=BIT}, 
+      #{userTag,jdbcType=BIT}, #{loadingValid,jdbcType=BIT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.mogu.blog.mbg.entity.TUser">
+    update t_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      pass_word = #{passWord,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=TINYINT},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      valid_code = #{validCode,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      login_count = #{loginCount,jdbcType=INTEGER},
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      `source` = #{source,jdbcType=VARCHAR},
+      uuid = #{uuid,jdbcType=VARCHAR},
+      qq_number = #{qqNumber,jdbcType=VARCHAR},
+      we_chat = #{weChat,jdbcType=VARCHAR},
+      occupation = #{occupation,jdbcType=VARCHAR},
+      comment_status = #{commentStatus,jdbcType=BIT},
+      ip_source = #{ipSource,jdbcType=VARCHAR},
+      browser = #{browser,jdbcType=VARCHAR},
+      os = #{os,jdbcType=VARCHAR},
+      start_email_notification = #{startEmailNotification,jdbcType=BIT},
+      user_tag = #{userTag,jdbcType=BIT},
+      loading_valid = #{loadingValid,jdbcType=BIT}
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select `uid`, user_name, pass_word, gender, avatar, email, birthday, mobile, valid_code, 
+    summary, login_count, last_login_time, last_login_ip, `status`, create_time, update_time, 
+    nick_name, `source`, uuid, qq_number, we_chat, occupation, comment_status, ip_source, 
+    browser, os, start_email_notification, user_tag, loading_valid
+    from t_user
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select `uid`, user_name, pass_word, gender, avatar, email, birthday, mobile, valid_code, 
+    summary, login_count, last_login_time, last_login_ip, `status`, create_time, update_time, 
+    nick_name, `source`, uuid, qq_number, we_chat, occupation, comment_status, ip_source, 
+    browser, os, start_email_notification, user_tag, loading_valid
+    from t_user
+  </select>
+</mapper>

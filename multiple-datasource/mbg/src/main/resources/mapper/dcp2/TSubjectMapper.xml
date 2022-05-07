@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.mogu.blog.mbg.mapper.TSubjectMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.mogu.blog.mbg.entity.TSubject">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="subject_name" jdbcType="VARCHAR" property="subjectName" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="file_uid" jdbcType="VARCHAR" property="fileUid" />
+    <result column="click_count" jdbcType="INTEGER" property="clickCount" />
+    <result column="collect_count" jdbcType="INTEGER" property="collectCount" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_subject
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.mogu.blog.mbg.entity.TSubject">
+    insert into t_subject (`uid`, subject_name, summary, 
+      file_uid, click_count, collect_count, 
+      `status`, sort, create_time, 
+      update_time)
+    values (#{uid,jdbcType=VARCHAR}, #{subjectName,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, 
+      #{fileUid,jdbcType=VARCHAR}, #{clickCount,jdbcType=INTEGER}, #{collectCount,jdbcType=INTEGER}, 
+      #{status,jdbcType=BIT}, #{sort,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.mogu.blog.mbg.entity.TSubject">
+    update t_subject
+    set subject_name = #{subjectName,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      file_uid = #{fileUid,jdbcType=VARCHAR},
+      click_count = #{clickCount,jdbcType=INTEGER},
+      collect_count = #{collectCount,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=BIT},
+      sort = #{sort,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select `uid`, subject_name, summary, file_uid, click_count, collect_count, `status`, 
+    sort, create_time, update_time
+    from t_subject
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select `uid`, subject_name, summary, file_uid, click_count, collect_count, `status`, 
+    sort, create_time, update_time
+    from t_subject
+  </select>
+</mapper>

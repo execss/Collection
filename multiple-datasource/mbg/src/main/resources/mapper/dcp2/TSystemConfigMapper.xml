@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.mogu.blog.mbg.mapper.TSystemConfigMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.mogu.blog.mbg.entity.TSystemConfig">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="qi_niu_access_key" jdbcType="VARCHAR" property="qiNiuAccessKey" />
+    <result column="qi_niu_secret_key" jdbcType="VARCHAR" property="qiNiuSecretKey" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="email_user_name" jdbcType="VARCHAR" property="emailUserName" />
+    <result column="email_password" jdbcType="VARCHAR" property="emailPassword" />
+    <result column="smtp_address" jdbcType="VARCHAR" property="smtpAddress" />
+    <result column="smtp_port" jdbcType="VARCHAR" property="smtpPort" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="qi_niu_bucket" jdbcType="VARCHAR" property="qiNiuBucket" />
+    <result column="qi_niu_area" jdbcType="VARCHAR" property="qiNiuArea" />
+    <result column="upload_qi_niu" jdbcType="VARCHAR" property="uploadQiNiu" />
+    <result column="upload_local" jdbcType="VARCHAR" property="uploadLocal" />
+    <result column="picture_priority" jdbcType="VARCHAR" property="picturePriority" />
+    <result column="qi_niu_picture_base_url" jdbcType="VARCHAR" property="qiNiuPictureBaseUrl" />
+    <result column="local_picture_base_url" jdbcType="VARCHAR" property="localPictureBaseUrl" />
+    <result column="start_email_notification" jdbcType="VARCHAR" property="startEmailNotification" />
+    <result column="editor_model" jdbcType="BIT" property="editorModel" />
+    <result column="theme_color" jdbcType="VARCHAR" property="themeColor" />
+    <result column="minio_end_point" jdbcType="VARCHAR" property="minioEndPoint" />
+    <result column="minio_access_key" jdbcType="VARCHAR" property="minioAccessKey" />
+    <result column="minio_secret_key" jdbcType="VARCHAR" property="minioSecretKey" />
+    <result column="minio_bucket" jdbcType="VARCHAR" property="minioBucket" />
+    <result column="upload_minio" jdbcType="BIT" property="uploadMinio" />
+    <result column="minio_picture_base_url" jdbcType="VARCHAR" property="minioPictureBaseUrl" />
+    <result column="open_dashboard_notification" jdbcType="BIT" property="openDashboardNotification" />
+    <result column="content_picture_priority" jdbcType="BIT" property="contentPicturePriority" />
+    <result column="open_email_activate" jdbcType="BIT" property="openEmailActivate" />
+    <result column="search_model" jdbcType="BIT" property="searchModel" />
+    <result column="dashboard_notification" jdbcType="LONGVARCHAR" property="dashboardNotification" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_system_config
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.mogu.blog.mbg.entity.TSystemConfig">
+    insert into t_system_config (`uid`, qi_niu_access_key, qi_niu_secret_key, 
+      email, email_user_name, email_password, 
+      smtp_address, smtp_port, `status`, 
+      create_time, update_time, qi_niu_bucket, 
+      qi_niu_area, upload_qi_niu, upload_local, 
+      picture_priority, qi_niu_picture_base_url, local_picture_base_url, 
+      start_email_notification, editor_model, theme_color, 
+      minio_end_point, minio_access_key, minio_secret_key, 
+      minio_bucket, upload_minio, minio_picture_base_url, 
+      open_dashboard_notification, content_picture_priority, 
+      open_email_activate, search_model, dashboard_notification
+      )
+    values (#{uid,jdbcType=VARCHAR}, #{qiNiuAccessKey,jdbcType=VARCHAR}, #{qiNiuSecretKey,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{emailUserName,jdbcType=VARCHAR}, #{emailPassword,jdbcType=VARCHAR}, 
+      #{smtpAddress,jdbcType=VARCHAR}, #{smtpPort,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{qiNiuBucket,jdbcType=VARCHAR}, 
+      #{qiNiuArea,jdbcType=VARCHAR}, #{uploadQiNiu,jdbcType=VARCHAR}, #{uploadLocal,jdbcType=VARCHAR}, 
+      #{picturePriority,jdbcType=VARCHAR}, #{qiNiuPictureBaseUrl,jdbcType=VARCHAR}, #{localPictureBaseUrl,jdbcType=VARCHAR}, 
+      #{startEmailNotification,jdbcType=VARCHAR}, #{editorModel,jdbcType=BIT}, #{themeColor,jdbcType=VARCHAR}, 
+      #{minioEndPoint,jdbcType=VARCHAR}, #{minioAccessKey,jdbcType=VARCHAR}, #{minioSecretKey,jdbcType=VARCHAR}, 
+      #{minioBucket,jdbcType=VARCHAR}, #{uploadMinio,jdbcType=BIT}, #{minioPictureBaseUrl,jdbcType=VARCHAR}, 
+      #{openDashboardNotification,jdbcType=BIT}, #{contentPicturePriority,jdbcType=BIT}, 
+      #{openEmailActivate,jdbcType=BIT}, #{searchModel,jdbcType=BIT}, #{dashboardNotification,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.mogu.blog.mbg.entity.TSystemConfig">
+    update t_system_config
+    set qi_niu_access_key = #{qiNiuAccessKey,jdbcType=VARCHAR},
+      qi_niu_secret_key = #{qiNiuSecretKey,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      email_user_name = #{emailUserName,jdbcType=VARCHAR},
+      email_password = #{emailPassword,jdbcType=VARCHAR},
+      smtp_address = #{smtpAddress,jdbcType=VARCHAR},
+      smtp_port = #{smtpPort,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      qi_niu_bucket = #{qiNiuBucket,jdbcType=VARCHAR},
+      qi_niu_area = #{qiNiuArea,jdbcType=VARCHAR},
+      upload_qi_niu = #{uploadQiNiu,jdbcType=VARCHAR},
+      upload_local = #{uploadLocal,jdbcType=VARCHAR},
+      picture_priority = #{picturePriority,jdbcType=VARCHAR},
+      qi_niu_picture_base_url = #{qiNiuPictureBaseUrl,jdbcType=VARCHAR},
+      local_picture_base_url = #{localPictureBaseUrl,jdbcType=VARCHAR},
+      start_email_notification = #{startEmailNotification,jdbcType=VARCHAR},
+      editor_model = #{editorModel,jdbcType=BIT},
+      theme_color = #{themeColor,jdbcType=VARCHAR},
+      minio_end_point = #{minioEndPoint,jdbcType=VARCHAR},
+      minio_access_key = #{minioAccessKey,jdbcType=VARCHAR},
+      minio_secret_key = #{minioSecretKey,jdbcType=VARCHAR},
+      minio_bucket = #{minioBucket,jdbcType=VARCHAR},
+      upload_minio = #{uploadMinio,jdbcType=BIT},
+      minio_picture_base_url = #{minioPictureBaseUrl,jdbcType=VARCHAR},
+      open_dashboard_notification = #{openDashboardNotification,jdbcType=BIT},
+      content_picture_priority = #{contentPicturePriority,jdbcType=BIT},
+      open_email_activate = #{openEmailActivate,jdbcType=BIT},
+      search_model = #{searchModel,jdbcType=BIT},
+      dashboard_notification = #{dashboardNotification,jdbcType=LONGVARCHAR}
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select `uid`, qi_niu_access_key, qi_niu_secret_key, email, email_user_name, email_password, 
+    smtp_address, smtp_port, `status`, create_time, update_time, qi_niu_bucket, qi_niu_area, 
+    upload_qi_niu, upload_local, picture_priority, qi_niu_picture_base_url, local_picture_base_url, 
+    start_email_notification, editor_model, theme_color, minio_end_point, minio_access_key, 
+    minio_secret_key, minio_bucket, upload_minio, minio_picture_base_url, open_dashboard_notification, 
+    content_picture_priority, open_email_activate, search_model, dashboard_notification
+    from t_system_config
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select `uid`, qi_niu_access_key, qi_niu_secret_key, email, email_user_name, email_password, 
+    smtp_address, smtp_port, `status`, create_time, update_time, qi_niu_bucket, qi_niu_area, 
+    upload_qi_niu, upload_local, picture_priority, qi_niu_picture_base_url, local_picture_base_url, 
+    start_email_notification, editor_model, theme_color, minio_end_point, minio_access_key, 
+    minio_secret_key, minio_bucket, upload_minio, minio_picture_base_url, open_dashboard_notification, 
+    content_picture_priority, open_email_activate, search_model, dashboard_notification
+    from t_system_config
+  </select>
+</mapper>

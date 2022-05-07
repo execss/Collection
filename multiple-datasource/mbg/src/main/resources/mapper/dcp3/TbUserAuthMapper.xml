@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.x.blog.mbg.mapper.TbUserAuthMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.x.blog.mbg.entity.TbUserAuth">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_info_id" jdbcType="INTEGER" property="userInfoId" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="login_type" jdbcType="BIT" property="loginType" />
+    <result column="ip_address" jdbcType="VARCHAR" property="ipAddress" />
+    <result column="ip_source" jdbcType="VARCHAR" property="ipSource" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_user_auth
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.x.blog.mbg.entity.TbUserAuth">
+    insert into tb_user_auth (id, user_info_id, username, 
+      `password`, login_type, ip_address, 
+      ip_source, create_time, update_time, 
+      last_login_time)
+    values (#{id,jdbcType=INTEGER}, #{userInfoId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{loginType,jdbcType=BIT}, #{ipAddress,jdbcType=VARCHAR}, 
+      #{ipSource,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{lastLoginTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.x.blog.mbg.entity.TbUserAuth">
+    update tb_user_auth
+    set user_info_id = #{userInfoId,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      login_type = #{loginType,jdbcType=BIT},
+      ip_address = #{ipAddress,jdbcType=VARCHAR},
+      ip_source = #{ipSource,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, user_info_id, username, `password`, login_type, ip_address, ip_source, 
+    create_time, update_time, last_login_time
+    from tb_user_auth
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, user_info_id, username, `password`, login_type, ip_address, ip_source, 
+    create_time, update_time, last_login_time
+    from tb_user_auth
+  </select>
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.mogu.blog.mbg.mapper.TTagMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.mogu.blog.mbg.entity.TTag">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="click_count" jdbcType="INTEGER" property="clickCount" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_tag
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.mogu.blog.mbg.entity.TTag">
+    insert into t_tag (`uid`, content, `status`, 
+      click_count, create_time, update_time, 
+      sort)
+    values (#{uid,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{clickCount,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{sort,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.mogu.blog.mbg.entity.TTag">
+    update t_tag
+    set content = #{content,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      click_count = #{clickCount,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      sort = #{sort,jdbcType=INTEGER}
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select `uid`, content, `status`, click_count, create_time, update_time, sort
+    from t_tag
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select `uid`, content, `status`, click_count, create_time, update_time, sort
+    from t_tag
+  </select>
+</mapper>

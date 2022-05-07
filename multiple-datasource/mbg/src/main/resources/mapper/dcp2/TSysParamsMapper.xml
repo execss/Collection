@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.mogu.blog.mbg.mapper.TSysParamsMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.mogu.blog.mbg.entity.TSysParams">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="params_type" jdbcType="VARCHAR" property="paramsType" />
+    <result column="params_name" jdbcType="VARCHAR" property="paramsName" />
+    <result column="params_key" jdbcType="VARCHAR" property="paramsKey" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="params_value" jdbcType="VARCHAR" property="paramsValue" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_sys_params
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.mogu.blog.mbg.entity.TSysParams">
+    insert into t_sys_params (`uid`, params_type, params_name, 
+      params_key, remark, params_value, 
+      `status`, create_time, update_time, 
+      sort)
+    values (#{uid,jdbcType=VARCHAR}, #{paramsType,jdbcType=VARCHAR}, #{paramsName,jdbcType=VARCHAR}, 
+      #{paramsKey,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{paramsValue,jdbcType=VARCHAR}, 
+      #{status,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{sort,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.mogu.blog.mbg.entity.TSysParams">
+    update t_sys_params
+    set params_type = #{paramsType,jdbcType=VARCHAR},
+      params_name = #{paramsName,jdbcType=VARCHAR},
+      params_key = #{paramsKey,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      params_value = #{paramsValue,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      sort = #{sort,jdbcType=INTEGER}
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select `uid`, params_type, params_name, params_key, remark, params_value, `status`, 
+    create_time, update_time, sort
+    from t_sys_params
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select `uid`, params_type, params_name, params_key, remark, params_value, `status`, 
+    create_time, update_time, sort
+    from t_sys_params
+  </select>
+</mapper>

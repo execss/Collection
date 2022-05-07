@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.mogu.blog.mbg.mapper.TStudyVideoMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.mogu.blog.mbg.entity.TStudyVideo">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="file_uid" jdbcType="VARCHAR" property="fileUid" />
+    <result column="resource_sort_uid" jdbcType="VARCHAR" property="resourceSortUid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="baidu_path" jdbcType="VARCHAR" property="baiduPath" />
+    <result column="click_count" jdbcType="VARCHAR" property="clickCount" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="parent_uid" jdbcType="VARCHAR" property="parentUid" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_study_video
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.mogu.blog.mbg.entity.TStudyVideo">
+    insert into t_study_video (`uid`, file_uid, resource_sort_uid, 
+      `name`, summary, content, 
+      baidu_path, click_count, `status`, 
+      create_time, update_time, parent_uid
+      )
+    values (#{uid,jdbcType=VARCHAR}, #{fileUid,jdbcType=VARCHAR}, #{resourceSortUid,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{baiduPath,jdbcType=VARCHAR}, #{clickCount,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{parentUid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.mogu.blog.mbg.entity.TStudyVideo">
+    update t_study_video
+    set file_uid = #{fileUid,jdbcType=VARCHAR},
+      resource_sort_uid = #{resourceSortUid,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      baidu_path = #{baiduPath,jdbcType=VARCHAR},
+      click_count = #{clickCount,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      parent_uid = #{parentUid,jdbcType=VARCHAR}
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select `uid`, file_uid, resource_sort_uid, `name`, summary, content, baidu_path, 
+    click_count, `status`, create_time, update_time, parent_uid
+    from t_study_video
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select `uid`, file_uid, resource_sort_uid, `name`, summary, content, baidu_path, 
+    click_count, `status`, create_time, update_time, parent_uid
+    from t_study_video
+  </select>
+</mapper>

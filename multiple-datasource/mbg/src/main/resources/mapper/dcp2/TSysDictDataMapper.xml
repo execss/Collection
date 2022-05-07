@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.mogu.blog.mbg.mapper.TSysDictDataMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.mogu.blog.mbg.entity.TSysDictData">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="oid" jdbcType="INTEGER" property="oid" />
+    <result column="dict_type_uid" jdbcType="VARCHAR" property="dictTypeUid" />
+    <result column="dict_label" jdbcType="VARCHAR" property="dictLabel" />
+    <result column="dict_value" jdbcType="VARCHAR" property="dictValue" />
+    <result column="css_class" jdbcType="VARCHAR" property="cssClass" />
+    <result column="list_class" jdbcType="VARCHAR" property="listClass" />
+    <result column="is_default" jdbcType="BIT" property="isDefault" />
+    <result column="create_by_uid" jdbcType="VARCHAR" property="createByUid" />
+    <result column="update_by_uid" jdbcType="VARCHAR" property="updateByUid" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_publish" jdbcType="VARCHAR" property="isPublish" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_sys_dict_data
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.mogu.blog.mbg.entity.TSysDictData">
+    insert into t_sys_dict_data (`uid`, oid, dict_type_uid, 
+      dict_label, dict_value, css_class, 
+      list_class, is_default, create_by_uid, 
+      update_by_uid, remark, `status`, 
+      create_time, update_time, is_publish, 
+      sort)
+    values (#{uid,jdbcType=VARCHAR}, #{oid,jdbcType=INTEGER}, #{dictTypeUid,jdbcType=VARCHAR}, 
+      #{dictLabel,jdbcType=VARCHAR}, #{dictValue,jdbcType=VARCHAR}, #{cssClass,jdbcType=VARCHAR}, 
+      #{listClass,jdbcType=VARCHAR}, #{isDefault,jdbcType=BIT}, #{createByUid,jdbcType=VARCHAR}, 
+      #{updateByUid,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isPublish,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.mogu.blog.mbg.entity.TSysDictData">
+    update t_sys_dict_data
+    set oid = #{oid,jdbcType=INTEGER},
+      dict_type_uid = #{dictTypeUid,jdbcType=VARCHAR},
+      dict_label = #{dictLabel,jdbcType=VARCHAR},
+      dict_value = #{dictValue,jdbcType=VARCHAR},
+      css_class = #{cssClass,jdbcType=VARCHAR},
+      list_class = #{listClass,jdbcType=VARCHAR},
+      is_default = #{isDefault,jdbcType=BIT},
+      create_by_uid = #{createByUid,jdbcType=VARCHAR},
+      update_by_uid = #{updateByUid,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_publish = #{isPublish,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER}
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select `uid`, oid, dict_type_uid, dict_label, dict_value, css_class, list_class, 
+    is_default, create_by_uid, update_by_uid, remark, `status`, create_time, update_time, 
+    is_publish, sort
+    from t_sys_dict_data
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select `uid`, oid, dict_type_uid, dict_label, dict_value, css_class, list_class, 
+    is_default, create_by_uid, update_by_uid, remark, `status`, create_time, update_time, 
+    is_publish, sort
+    from t_sys_dict_data
+  </select>
+</mapper>

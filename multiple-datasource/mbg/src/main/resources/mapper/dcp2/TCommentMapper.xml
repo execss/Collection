@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.mogu.blog.mbg.mapper.TCommentMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.mogu.blog.mbg.entity.TComment">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="user_uid" jdbcType="VARCHAR" property="userUid" />
+    <result column="to_uid" jdbcType="VARCHAR" property="toUid" />
+    <result column="to_user_uid" jdbcType="VARCHAR" property="toUserUid" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="blog_uid" jdbcType="VARCHAR" property="blogUid" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+    <result column="TYPE" jdbcType="BIT" property="type" />
+    <result column="first_comment_uid" jdbcType="VARCHAR" property="firstCommentUid" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_comment
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.mogu.blog.mbg.entity.TComment">
+    insert into t_comment (`uid`, user_uid, to_uid, 
+      to_user_uid, content, blog_uid, 
+      `status`, create_time, update_time, 
+      `source`, `TYPE`, first_comment_uid
+      )
+    values (#{uid,jdbcType=VARCHAR}, #{userUid,jdbcType=VARCHAR}, #{toUid,jdbcType=VARCHAR}, 
+      #{toUserUid,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{blogUid,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{source,jdbcType=VARCHAR}, #{type,jdbcType=BIT}, #{firstCommentUid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.mogu.blog.mbg.entity.TComment">
+    update t_comment
+    set user_uid = #{userUid,jdbcType=VARCHAR},
+      to_uid = #{toUid,jdbcType=VARCHAR},
+      to_user_uid = #{toUserUid,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      blog_uid = #{blogUid,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      `source` = #{source,jdbcType=VARCHAR},
+      `TYPE` = #{type,jdbcType=BIT},
+      first_comment_uid = #{firstCommentUid,jdbcType=VARCHAR}
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select `uid`, user_uid, to_uid, to_user_uid, content, blog_uid, `status`, create_time, 
+    update_time, `source`, `TYPE`, first_comment_uid
+    from t_comment
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select `uid`, user_uid, to_uid, to_user_uid, content, blog_uid, `status`, create_time, 
+    update_time, `source`, `TYPE`, first_comment_uid
+    from t_comment
+  </select>
+</mapper>

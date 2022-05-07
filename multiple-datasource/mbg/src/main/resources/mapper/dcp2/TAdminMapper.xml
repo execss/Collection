@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.mogu.blog.mbg.mapper.TAdminMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.mogu.blog.mbg.entity.TAdmin">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="pass_word" jdbcType="VARCHAR" property="passWord" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="valid_code" jdbcType="VARCHAR" property="validCode" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="login_count" jdbcType="INTEGER" property="loginCount" />
+    <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="last_login_ip" jdbcType="VARCHAR" property="lastLoginIp" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="qq_number" jdbcType="VARCHAR" property="qqNumber" />
+    <result column="we_chat" jdbcType="VARCHAR" property="weChat" />
+    <result column="occupation" jdbcType="VARCHAR" property="occupation" />
+    <result column="github" jdbcType="VARCHAR" property="github" />
+    <result column="gitee" jdbcType="VARCHAR" property="gitee" />
+    <result column="role_uid" jdbcType="VARCHAR" property="roleUid" />
+    <result column="person_resume" jdbcType="LONGVARCHAR" property="personResume" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_admin
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.mogu.blog.mbg.entity.TAdmin">
+    insert into t_admin (`uid`, user_name, pass_word, 
+      gender, avatar, email, 
+      birthday, mobile, valid_code, 
+      summary, login_count, last_login_time, 
+      last_login_ip, `status`, create_time, 
+      update_time, nick_name, qq_number, 
+      we_chat, occupation, github, 
+      gitee, role_uid, person_resume
+      )
+    values (#{uid,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{passWord,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=DATE}, #{mobile,jdbcType=VARCHAR}, #{validCode,jdbcType=VARCHAR}, 
+      #{summary,jdbcType=VARCHAR}, #{loginCount,jdbcType=INTEGER}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
+      #{lastLoginIp,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{nickName,jdbcType=VARCHAR}, #{qqNumber,jdbcType=VARCHAR}, 
+      #{weChat,jdbcType=VARCHAR}, #{occupation,jdbcType=VARCHAR}, #{github,jdbcType=VARCHAR}, 
+      #{gitee,jdbcType=VARCHAR}, #{roleUid,jdbcType=VARCHAR}, #{personResume,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.mogu.blog.mbg.entity.TAdmin">
+    update t_admin
+    set user_name = #{userName,jdbcType=VARCHAR},
+      pass_word = #{passWord,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      valid_code = #{validCode,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      login_count = #{loginCount,jdbcType=INTEGER},
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      qq_number = #{qqNumber,jdbcType=VARCHAR},
+      we_chat = #{weChat,jdbcType=VARCHAR},
+      occupation = #{occupation,jdbcType=VARCHAR},
+      github = #{github,jdbcType=VARCHAR},
+      gitee = #{gitee,jdbcType=VARCHAR},
+      role_uid = #{roleUid,jdbcType=VARCHAR},
+      person_resume = #{personResume,jdbcType=LONGVARCHAR}
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select `uid`, user_name, pass_word, gender, avatar, email, birthday, mobile, valid_code, 
+    summary, login_count, last_login_time, last_login_ip, `status`, create_time, update_time, 
+    nick_name, qq_number, we_chat, occupation, github, gitee, role_uid, person_resume
+    from t_admin
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select `uid`, user_name, pass_word, gender, avatar, email, birthday, mobile, valid_code, 
+    summary, login_count, last_login_time, last_login_ip, `status`, create_time, update_time, 
+    nick_name, qq_number, we_chat, occupation, github, gitee, role_uid, person_resume
+    from t_admin
+  </select>
+</mapper>

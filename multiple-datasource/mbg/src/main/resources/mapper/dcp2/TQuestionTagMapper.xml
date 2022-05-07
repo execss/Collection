@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.mogu.blog.mbg.mapper.TQuestionTagMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.mogu.blog.mbg.entity.TQuestionTag">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="parent_uid" jdbcType="VARCHAR" property="parentUid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="click_count" jdbcType="INTEGER" property="clickCount" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_question_tag
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.mogu.blog.mbg.entity.TQuestionTag">
+    insert into t_question_tag (`uid`, parent_uid, `name`, 
+      summary, `status`, click_count, 
+      create_time, update_time, sort
+      )
+    values (#{uid,jdbcType=VARCHAR}, #{parentUid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{summary,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{clickCount,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{sort,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.mogu.blog.mbg.entity.TQuestionTag">
+    update t_question_tag
+    set parent_uid = #{parentUid,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      click_count = #{clickCount,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      sort = #{sort,jdbcType=INTEGER}
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select `uid`, parent_uid, `name`, summary, `status`, click_count, create_time, update_time, 
+    sort
+    from t_question_tag
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select `uid`, parent_uid, `name`, summary, `status`, click_count, create_time, update_time, 
+    sort
+    from t_question_tag
+  </select>
+</mapper>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.mogu.blog.mbg.mapper.TExceptionLogMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.mogu.blog.mbg.entity.TExceptionLog">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="ip_source" jdbcType="VARCHAR" property="ipSource" />
+    <result column="method" jdbcType="VARCHAR" property="method" />
+    <result column="operation" jdbcType="VARCHAR" property="operation" />
+    <result column="exception_json" jdbcType="LONGVARCHAR" property="exceptionJson" />
+    <result column="exception_message" jdbcType="LONGVARCHAR" property="exceptionMessage" />
+    <result column="params" jdbcType="LONGVARCHAR" property="params" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_exception_log
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.mogu.blog.mbg.entity.TExceptionLog">
+    insert into t_exception_log (`uid`, `status`, create_time, 
+      update_time, ip, ip_source, 
+      `method`, `operation`, exception_json, 
+      exception_message, params)
+    values (#{uid,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{ip,jdbcType=VARCHAR}, #{ipSource,jdbcType=VARCHAR}, 
+      #{method,jdbcType=VARCHAR}, #{operation,jdbcType=VARCHAR}, #{exceptionJson,jdbcType=LONGVARCHAR}, 
+      #{exceptionMessage,jdbcType=LONGVARCHAR}, #{params,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.mogu.blog.mbg.entity.TExceptionLog">
+    update t_exception_log
+    set `status` = #{status,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      ip = #{ip,jdbcType=VARCHAR},
+      ip_source = #{ipSource,jdbcType=VARCHAR},
+      `method` = #{method,jdbcType=VARCHAR},
+      `operation` = #{operation,jdbcType=VARCHAR},
+      exception_json = #{exceptionJson,jdbcType=LONGVARCHAR},
+      exception_message = #{exceptionMessage,jdbcType=LONGVARCHAR},
+      params = #{params,jdbcType=LONGVARCHAR}
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select `uid`, `status`, create_time, update_time, ip, ip_source, `method`, `operation`, 
+    exception_json, exception_message, params
+    from t_exception_log
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select `uid`, `status`, create_time, update_time, ip, ip_source, `method`, `operation`, 
+    exception_json, exception_message, params
+    from t_exception_log
+  </select>
+</mapper>

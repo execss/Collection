@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.x.blog.mbg.mapper.TbArticleMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.x.blog.mbg.entity.TbArticle">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="article_cover" jdbcType="VARCHAR" property="articleCover" />
+    <result column="article_title" jdbcType="VARCHAR" property="articleTitle" />
+    <result column="type" jdbcType="BIT" property="type" />
+    <result column="original_url" jdbcType="VARCHAR" property="originalUrl" />
+    <result column="is_top" jdbcType="BIT" property="isTop" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="article_content" jdbcType="LONGVARCHAR" property="articleContent" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_article
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.x.blog.mbg.entity.TbArticle">
+    insert into tb_article (id, user_id, category_id, 
+      article_cover, article_title, `type`, 
+      original_url, is_top, is_delete, 
+      `status`, create_time, update_time, 
+      article_content)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, 
+      #{articleCover,jdbcType=VARCHAR}, #{articleTitle,jdbcType=VARCHAR}, #{type,jdbcType=BIT}, 
+      #{originalUrl,jdbcType=VARCHAR}, #{isTop,jdbcType=BIT}, #{isDelete,jdbcType=BIT}, 
+      #{status,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{articleContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.x.blog.mbg.entity.TbArticle">
+    update tb_article
+    set user_id = #{userId,jdbcType=INTEGER},
+      category_id = #{categoryId,jdbcType=INTEGER},
+      article_cover = #{articleCover,jdbcType=VARCHAR},
+      article_title = #{articleTitle,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=BIT},
+      original_url = #{originalUrl,jdbcType=VARCHAR},
+      is_top = #{isTop,jdbcType=BIT},
+      is_delete = #{isDelete,jdbcType=BIT},
+      `status` = #{status,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      article_content = #{articleContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, user_id, category_id, article_cover, article_title, `type`, original_url, 
+    is_top, is_delete, `status`, create_time, update_time, article_content
+    from tb_article
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, user_id, category_id, article_cover, article_title, `type`, original_url, 
+    is_top, is_delete, `status`, create_time, update_time, article_content
+    from tb_article
+  </select>
+</mapper>

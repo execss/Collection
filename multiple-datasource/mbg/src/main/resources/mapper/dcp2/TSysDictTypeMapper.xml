@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.mogu.blog.mbg.mapper.TSysDictTypeMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.mogu.blog.mbg.entity.TSysDictType">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="oid" jdbcType="INTEGER" property="oid" />
+    <result column="dict_name" jdbcType="VARCHAR" property="dictName" />
+    <result column="dict_type" jdbcType="VARCHAR" property="dictType" />
+    <result column="create_by_uid" jdbcType="VARCHAR" property="createByUid" />
+    <result column="update_by_uid" jdbcType="VARCHAR" property="updateByUid" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_publish" jdbcType="VARCHAR" property="isPublish" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_sys_dict_type
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.mogu.blog.mbg.entity.TSysDictType">
+    insert into t_sys_dict_type (`uid`, oid, dict_name, 
+      dict_type, create_by_uid, update_by_uid, 
+      remark, `status`, create_time, 
+      update_time, is_publish, sort
+      )
+    values (#{uid,jdbcType=VARCHAR}, #{oid,jdbcType=INTEGER}, #{dictName,jdbcType=VARCHAR}, 
+      #{dictType,jdbcType=VARCHAR}, #{createByUid,jdbcType=VARCHAR}, #{updateByUid,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{isPublish,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.mogu.blog.mbg.entity.TSysDictType">
+    update t_sys_dict_type
+    set oid = #{oid,jdbcType=INTEGER},
+      dict_name = #{dictName,jdbcType=VARCHAR},
+      dict_type = #{dictType,jdbcType=VARCHAR},
+      create_by_uid = #{createByUid,jdbcType=VARCHAR},
+      update_by_uid = #{updateByUid,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_publish = #{isPublish,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER}
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select `uid`, oid, dict_name, dict_type, create_by_uid, update_by_uid, remark, `status`, 
+    create_time, update_time, is_publish, sort
+    from t_sys_dict_type
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select `uid`, oid, dict_name, dict_type, create_by_uid, update_by_uid, remark, `status`, 
+    create_time, update_time, is_publish, sort
+    from t_sys_dict_type
+  </select>
+</mapper>

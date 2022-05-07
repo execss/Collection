@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.x.blog.mbg.mapper.TbPhotoAlbumMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.x.blog.mbg.entity.TbPhotoAlbum">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="album_name" jdbcType="VARCHAR" property="albumName" />
+    <result column="album_desc" jdbcType="VARCHAR" property="albumDesc" />
+    <result column="album_cover" jdbcType="VARCHAR" property="albumCover" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_photo_album
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.x.blog.mbg.entity.TbPhotoAlbum">
+    insert into tb_photo_album (id, album_name, album_desc, 
+      album_cover, is_delete, `status`, 
+      create_time, update_time)
+    values (#{id,jdbcType=INTEGER}, #{albumName,jdbcType=VARCHAR}, #{albumDesc,jdbcType=VARCHAR}, 
+      #{albumCover,jdbcType=VARCHAR}, #{isDelete,jdbcType=BIT}, #{status,jdbcType=BIT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.x.blog.mbg.entity.TbPhotoAlbum">
+    update tb_photo_album
+    set album_name = #{albumName,jdbcType=VARCHAR},
+      album_desc = #{albumDesc,jdbcType=VARCHAR},
+      album_cover = #{albumCover,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=BIT},
+      `status` = #{status,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, album_name, album_desc, album_cover, is_delete, `status`, create_time, 
+    update_time
+    from tb_photo_album
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, album_name, album_desc, album_cover, is_delete, `status`, create_time, 
+    update_time
+    from tb_photo_album
+  </select>
+</mapper>

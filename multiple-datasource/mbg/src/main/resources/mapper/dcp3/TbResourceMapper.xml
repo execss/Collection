@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.x.blog.mbg.mapper.TbResourceMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.x.blog.mbg.entity.TbResource">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="resource_name" jdbcType="VARCHAR" property="resourceName" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="request_method" jdbcType="VARCHAR" property="requestMethod" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="is_anonymous" jdbcType="BIT" property="isAnonymous" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_resource
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.x.blog.mbg.entity.TbResource">
+    insert into tb_resource (id, resource_name, url, 
+      request_method, parent_id, is_anonymous, 
+      create_time, update_time)
+    values (#{id,jdbcType=INTEGER}, #{resourceName,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{requestMethod,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{isAnonymous,jdbcType=BIT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.x.blog.mbg.entity.TbResource">
+    update tb_resource
+    set resource_name = #{resourceName,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      request_method = #{requestMethod,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      is_anonymous = #{isAnonymous,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, resource_name, url, request_method, parent_id, is_anonymous, create_time, 
+    update_time
+    from tb_resource
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, resource_name, url, request_method, parent_id, is_anonymous, create_time, 
+    update_time
+    from tb_resource
+  </select>
+</mapper>
