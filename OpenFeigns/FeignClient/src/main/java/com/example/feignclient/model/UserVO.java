@@ -1,0 +1,10 @@
+package com.example.feignclient.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+@AllArgsConstructor
+@Data
+public class UserVO {
+    private String username;
+    private String password;
+}
