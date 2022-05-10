@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class IOTest {
 
@@ -54,30 +53,39 @@ public class IOTest {
     @Test
     void ByteIO() throws IOException {
 
-        FileInputStream fileInputStream = new FileInputStream(new File("C:\\Intel\\AccessKey.csv"));
+        InputStream fileInputStream = new FileInputStream(new File("C:\\Intel\\name.pdf"));
 
-        FileOutputStream fileOutputStream = new FileOutputStream("C:\\Intel\\namesss");
-        byte[] b = new byte[1024];
-        int len;//TODO int len= -1
-        while ((len = fileInputStream.read(b)) != -1) {
-            fileOutputStream.write(b, 0, len);
-        }
+        FileOutputStream fileOutputStream = new FileOutputStream("C:\\Intel\\namesss.pdf");
+//        byte[] b = new byte[1024];
+//        int len;//TODO int len= -1
+//        while ((len = fileInputStream.read(b)) != -1) {
+//            fileOutputStream.write(b, 0, len);
+//        }
 
-        while ((len = fileInputStream.read()) != -1) {
-            fileOutputStream.write(len);
-        }
+//        while ((len = fileInputStream.read()) != -1) {
+//            fileOutputStream.write(len);
+//        }
 
-        try (
-                Stream<String> input =
-                        Files.lines(Paths.get("C:\\Intel\\AccessKey.csv"));
-                PrintWriter output =
-                        new PrintWriter("StreamInAndOut.txt")
-        ) {
-            input.map(String::toUpperCase)
-                    .forEachOrdered(output::println);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        /**
+         * from
+         * https://github.com/execss/fastdfs-client-java.git
+         * org.csource.fastdfs.FdfsTest
+         */
+        byte[] bytes = new byte[fileInputStream.available()];
+        fileInputStream.read(bytes);
+        fileOutputStream.write(bytes);
+
+//        try (
+//                Stream<String> input =
+//                        Files.lines(Paths.get("C:\\Intel\\AccessKey.csv"));
+//                PrintWriter output =
+//                        new PrintWriter("StreamInAndOut.txt")
+//        ) {
+//            input.map(String::toUpperCase)
+//                    .forEachOrdered(output::println);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
 
 
     }
@@ -113,6 +121,9 @@ public class IOTest {
             while ((dataLen = bufferedInputStream.read(bytes)) != -1) {
                 bufferedOutputStream.write(bytes, 0, dataLen);
             }
+
+
+
         } catch (Exception e) {
 
         }
