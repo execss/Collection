@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sqltest.mbg.mapper.TeacherMapper">
+  <resultMap id="BaseResultMap" type="com.example.sqltest.mbg.entity.Teacher">
+    <result column="TId" jdbcType="VARCHAR" property="tid" />
+    <result column="Tname" jdbcType="VARCHAR" property="tname" />
+  </resultMap>
+  <insert id="insert" parameterType="com.example.sqltest.mbg.entity.Teacher">
+    insert into Teacher (TId, Tname)
+    values (#{tid,jdbcType=VARCHAR}, #{tname,jdbcType=VARCHAR})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select TId, Tname
+    from Teacher
+  </select>
+</mapper>

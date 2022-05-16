@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sqltest.mbg.mapper.CourseMapper">
+  <resultMap id="BaseResultMap" type="com.example.sqltest.mbg.entity.Course">
+    <result column="CId" jdbcType="VARCHAR" property="cid" />
+    <result column="Cname" jdbcType="VARCHAR" property="cname" />
+    <result column="TId" jdbcType="VARCHAR" property="tid" />
+  </resultMap>
+  <insert id="insert" parameterType="com.example.sqltest.mbg.entity.Course">
+    insert into Course (CId, Cname, TId
+      )
+    values (#{cid,jdbcType=VARCHAR}, #{cname,jdbcType=VARCHAR}, #{tid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select CId, Cname, TId
+    from Course
+  </select>
+</mapper>

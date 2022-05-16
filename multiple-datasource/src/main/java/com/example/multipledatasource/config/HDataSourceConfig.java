@@ -73,32 +73,18 @@ public class HDataSourceConfig {
     }
 
 
-//    @Bean(name = "H1")
-//    @ConfigurationProperties("spring.datasource.hikari.h1")
-//    public DataSource dataSource() {
-//        return new HikariDataSource();
-//    }
+    @Bean(name = "HP")
+    @ConfigurationProperties("spring.datasource.hikari.hp")
+    public DataSource forth() {
+        return DataSourceBuilder.create()
+                .type(HikariDataSource.class)
+                .driverClassName("org.postgresql.Driver")
+                .url("jdbc:postgresql://192.168.1.11:5432/db1")
+                .username("postgres")
+                .password("root")
+                .build();
+//        return DruidDataSourceBuilder.create().build();
+    }
 
-//    @Bean
-//    @Primary
-//    @ConfigurationProperties("spring.datasource")
-//    //@ConfigurationProperties("spring.datasource.hikari") can also be used, no difference
-//    public DataSourceProperties mySQLDataSourceProperties() {
-//        return new DataSourceProperties();
-//    }
-//
-//    @Bean
-//    @Primary
-//    @ConfigurationProperties("spring.datasource.hikari.h11")
-//    public DataSource mySQLDataSource() {
-//        return mySQLDataSourceProperties().initializeDataSourceBuilder().build();
-//    }
-//
-//    @Bean
-//    @ConfigurationProperties(prefix = "spring.datasource.hikari")
-//    public HikariConfig hikariConfig() {
-//        return new HikariConfig();
-//    }
-//
 
 }
