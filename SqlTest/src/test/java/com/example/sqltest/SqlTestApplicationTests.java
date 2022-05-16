@@ -8,12 +8,12 @@ import com.example.sqltest.mbg.mapper.CourseMapper;
 import com.example.sqltest.mbg.mapper.ScMapper;
 import com.example.sqltest.mbg.mapper.StudentMapper;
 import com.example.sqltest.mbg.mapper.TeacherMapper;
-import com.example.sqltest.model.dto.CourseScDTO;
-import com.example.sqltest.model.dto.StudentCourseScDTO;
-import com.example.sqltest.model.dto.StudentT4DTO;
+import com.example.sqltest.model.dto.*;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.util.diff.myers.DiffNode;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -380,8 +380,7 @@ class SqlTestApplicationTests {
         Set set = new HashSet<>();
         for (Student student : studentList) {
             List<String> cIdListBySid = scList.stream().filter(sc -> Objects.equals(sc.getSid(), student.getSid())).map(Sc::getCid).collect(Collectors.toList());
-            if (cIdListBySid.size() != cIdList.size())
-                continue;
+
             int i = 0, j = 0;
             for (String s : cIdListBySid) {
                 if (cIdList.contains(s))
@@ -391,7 +390,7 @@ class SqlTestApplicationTests {
                 if (cIdListBySid.contains(s))
                     ++j;
             }
-            if (i == j) {
+            if (i == j && i == cIdList.size()) {
                 set.add(student.getSid());
             }
         }
@@ -437,11 +436,11 @@ class SqlTestApplicationTests {
     }
 
     /**
-     * TODO
+     *
      * 查询两门及其以上不及格课程的同学的学号，姓名及其平均成绩
      */
     @Test
-    void T11(){
+    void T11() {
         //        HashMap map = new HashMap<String, HashMap<String, String>>();
 //        for (Student student : studentList) {
 //            Map<String, Integer> mapBySid = scList.stream().filter(sc -> Objects.equals(sc.getSid(), student.getSid())).collect(Collectors.toMap(Sc::getCid, Sc::getScore));
@@ -451,53 +450,357 @@ class SqlTestApplicationTests {
 //            map.put(student.getSid(), mapBySid);
 //        }
 
-        Set set =new HashSet<>();
+        Set set = new HashSet<>();
         List<Student> studentList = studentMapper.selectAll();
         List<Sc> scList = scMapper.selectAll();
-        for (Student student : studentList) {
-            Map<String, Integer> scMapBySid = scList.stream().filter(sc -> Objects.equals(sc.getSid(), student.getSid())).collect(Collectors.toMap(Sc::getCid, Sc::getScore));
-            if (scMapBySid.get("01") != null && scMapBySid.get("02") != null&& scMapBySid.get("02") != null) {
-                if ((scMapBySid.get("01")>60&&scMapBySid.get("02")>60)||(scMapBySid.get("01")>60&&scMapBySid.get("03")>60)||(scMapBySid.get("02")>60&&scMapBySid.get("03")>60)) {
-                    set.add(student.getSid());
+//        Map map = new HashMap<>();
+//        for (Student student : studentList) {
+//            Map<String, Integer> scMapBySid = scList.stream().filter(sc -> Objects.equals(sc.getSid(), student.getSid())).collect(Collectors.toMap(Sc::getCid, Sc::getScore));
+//            map.put(student.getSid(), scMapBySid);
+//        }
+//        for (Student student : studentList) {
+//            Map<String, Integer> mapBySid = scList.stream().filter(sc -> Objects.equals(sc.getSid(), student.getSid())).collect(Collectors.toMap(Sc::getCid, Sc::getScore));
+//            int count = (int) scList.stream().filter(sc -> Objects.equals(sc.getSid(), student.getSid())).map(Sc::getCid).count();
+//            int sum = scList.stream().filter(sc -> Objects.equals(sc.getSid(), student.getSid())).mapToInt(Sc::getScore).sum();
+//            if (sum == 0)
+//                continue;
+//            int average = sum / ((int) count);
+//            if (average >= 60) {
+//                map.put(student.getSid(), mapBySid);
+//            }
+//        }
+
+        List<String> sIdByPassList = studentList.stream().map(
+                student -> StudentCourseScDTO.builder()
+                        .sid(student.getSid())
+                        .courseScDTOList(
+                                scList.stream()
+                                        .filter(sc -> Objects.equals(sc.getSid(), student.getSid()))
+                                        .filter(sc -> sc.getScore() >= 60)
+                                        .map(sc ->
+                                                CourseScDTO.builder()
+                                                        .cid(sc.getCid())
+                                                        .score(sc.getScore())
+                                                        .build()
+                                        ).collect(Collectors.toList())
+                        ).build()).filter(studentCourseScDTO -> studentCourseScDTO.getCourseScDTOList().size() > 1).map(StudentCourseScDTO::getSid).collect(Collectors.toList());
+
+        List<StudentAveScDTO> studentAveScDTOList = studentList.stream().filter(student -> !sIdByPassList.contains(student.getSid())).map(
+                student -> StudentAveScDTO.builder()
+                        .sid(student.getSid())
+                        .name(student.getSname())
+                        .aveSc(null)
+                        .build()
+        ).peek(
+                studentAveScDTO -> {
+                    int count = (int) scList.stream().filter(sc -> Objects.equals(sc.getSid(), studentAveScDTO.getSid())).map(Sc::getCid).count();
+                    int sum = scList.stream().filter(sc -> Objects.equals(sc.getSid(), studentAveScDTO.getSid())).mapToInt(Sc::getScore).sum();
+                    if (count > 0) {
+                        studentAveScDTO.setAveSc(sum / count);
+                    }
                 }
-            }
+        ).collect(Collectors.toList());
 
-        }
-        List<Student> studentList1 = studentList.stream().filter(student -> !set.contains(student.getSid())).collect(Collectors.toList());
-
-        log.info(Jackson.toString(studentList1));
+        log.info(Jackson.toString(studentAveScDTOList));
 
     }
 
     /**
-     *检索" 01 "课程分数小于 60，按分数降序排列的学生信息
+     * 检索" 01 "课程分数小于 60，按分数降序排列的学生信息
      */
     @Test
-    void T12(){
-
+    void T12() {
+        List<Student> studentList = studentMapper.selectAll();
+        List<Sc> scList = scMapper.selectAll();
+        List<Sc> scList1 = scList.stream().filter(sc -> sc.getCid().equals("01")).filter(sc -> sc.getScore() < 60).collect(Collectors.toList());
+        List<Student> studentList1 = studentList.stream().filter(student -> scList1.stream().map(Sc::getSid).collect(Collectors.toList()).contains(student.getSid())).collect(Collectors.toList());
+        scList1.sort((a, b) -> (b.getScore().compareTo(a.getScore())));
+        log.info(Jackson.toString(scList1));
     }
 
     /**
      * 按平均成绩从高到低显示所有学生的所有课程的成绩以及平均成绩
      */
     @Test
-    void T13(){
+    void T13() {
+        List<Student> studentList = studentMapper.selectAll();
+        List<Sc> scList = scMapper.selectAll();
+        List<StudentScDTO> studentScDTOList = studentList.stream().map(student -> StudentScDTO.builder().sid(student.getSid()).aveSc(0).courseScDTOList(null).build())
+                .peek(
+                        studentScDTO -> {
+                            int sum = scList.stream().filter(sc -> sc.getSid().equals(studentScDTO.getSid())).mapToInt(Sc::getScore).sum();
+                            int count = (int) scList.stream().filter(sc -> sc.getSid().equals(studentScDTO.getSid())).map(Sc::getCid).count();
+                            int counts = 3;
+                            if (count > 0) {
+                                studentScDTO.setAveSc(sum / counts);
+                            }
+                        }
+                ).peek(
+                        studentScDTO ->
+                                studentScDTO.setCourseScDTOList(scList.stream().filter(sc -> sc.getSid().equals(studentScDTO.getSid())).map(
+                                        sc -> CourseScDTO.builder().cid(sc.getCid()).score(sc.getScore()).build()
+                                ).collect(Collectors.toList()))
 
+
+                ).collect(Collectors.toList());
+        studentScDTOList.sort((a, b) -> (b.getAveSc().compareTo(a.getAveSc())));
+//        studentScDTOList.stream().filter()
+
+        log.info(Jackson.toString(studentScDTOList));
     }
 
     /**
      * 查询各科成绩最高分、最低分和平均分：
      * 以如下形式显示：课程 ID，课程 name，最高分，最低分，平均分，及格率，中等率，优良率，优秀率
-     *
+     * <p>
      * 及格为>=60，中等为：70-80，优良为：80-90，优秀为：>=90
      * 要求输出课程号和选修人数，查询结果按人数降序排列，若人数相同，按课程号升序排列
-     *
      */
     @Test
-    void T14(){
+    void T14() {
+        List<Sc> scList = scMapper.selectAll();
+        List<Student> studentList = studentMapper.selectAll();
+        List<Sc> scList1 = scList.stream().filter(sc -> sc.getCid().equals("02")).collect(Collectors.toList());
+        scList1.sort((a, b) -> (b.getScore().compareTo(a.getScore())));
+        Sc sc0 = scList1.get(0);
+        log.info(sc0.toString());
+
+        int count = (int) scList.stream().filter(sc -> sc.getCid().equals("02")).count();
+        int size = studentList.size();
+        int sum = scList.stream().filter(sc -> sc.getCid().equals("02")).mapToInt(Sc::getScore).sum();
+//        Assert.isTrue(count==0,"null point");
+        int aveScore = sum / count;
+        log.info(sum + "\n" + count + "\n" + aveScore + "");
+
 
     }
 
+    /**
+     * 按各科成绩进行排序，并显示排名， Score 重复时保留名次空缺
+     */
+    @Test
+    void T15() {
+        List<Student> studentList = studentMapper.selectAll();
+        List<Sc> scList = scMapper.selectAll();
+        List<StudentScDetailDTO> studentScDetailDTOList = studentList.stream().map(student -> StudentScDetailDTO.builder().sid(student.getSid()).aveSc(0).courseScMap(null).build())
+                .peek(
+                        studentScDetailDTO -> {
+                            int sum = scList.stream().filter(sc -> sc.getSid().equals(studentScDetailDTO.getSid())).mapToInt(Sc::getScore).sum();
+                            int count = (int) scList.stream().filter(sc -> sc.getSid().equals(studentScDetailDTO.getSid())).map(Sc::getCid).count();
+                            int counts = 3;
+                            if (count > 0) {
+                                studentScDetailDTO.setAveSc(sum / counts);
+                            }
+                        }
+                ).peek(
+                        studentScDetailDTO -> {
+                            Map<String, Integer> stringIntegerMap = scList.stream().filter(sc -> sc.getSid().equals(studentScDetailDTO.getSid())).collect(Collectors.toMap(Sc::getCid, Sc::getScore));
+                            if (stringIntegerMap.size() == 3) {
+                                studentScDetailDTO.setCourseScMap(stringIntegerMap);
+                            } else {
+                                if (!stringIntegerMap.containsKey("01")) {
+                                    stringIntegerMap.put("01", 0);
+                                }
+                                if (!stringIntegerMap.containsKey("02")) {
+                                    stringIntegerMap.put("02", 0);
+                                }
+                                if (!stringIntegerMap.containsKey("03")) {
+                                    stringIntegerMap.put("03", 0);
+                                }
+                                studentScDetailDTO.setCourseScMap(stringIntegerMap);
+                            }
+                        }
+                ).collect(Collectors.toList());
+
+        studentScDetailDTOList.sort((a, b) -> b.getCourseScMap().get("03").toString().compareTo(a.getCourseScMap().get("03").toString()));
+        log.info(Jackson.toString(studentScDetailDTOList));
+    }
+
+    /**
+     * 查询学生的总成绩，并进行排名，总分重复时保留名次空缺
+     */
+    @Test
+    void T16() {
+        List<Student> studentList = studentMapper.selectAll();
+        List<Sc> scList = scMapper.selectAll();
+        List<StudentScDTO> studentScDTOList = studentList.stream().map(student -> StudentScDTO.builder().sid(student.getSid()).aveSc(0).courseScDTOList(null).build())
+                .peek(
+                        studentScDTO -> {
+                            int sum = scList.stream().filter(sc -> sc.getSid().equals(studentScDTO.getSid())).mapToInt(Sc::getScore).sum();
+                            int count = (int) scList.stream().filter(sc -> sc.getSid().equals(studentScDTO.getSid())).map(Sc::getCid).count();
+                            int counts = 3;
+                            if (count > 0) {
+                                studentScDTO.setAveSc(sum / counts);
+                            }
+                        }
+                ).peek(
+                        studentScDTO ->
+                                studentScDTO.setCourseScDTOList(scList.stream().filter(sc -> sc.getSid().equals(studentScDTO.getSid())).map(
+                                        sc -> CourseScDTO.builder().cid(sc.getCid()).score(sc.getScore()).build()
+                                ).collect(Collectors.toList()))
 
 
+                ).collect(Collectors.toList());
+    }
+
+    /**
+     * 统计各科成绩各分数段人数：课程编号，课程名称，[100-85]，[85-70]，[70-60]，[60-0] 及所占百分比
+     */
+    @Test
+    void T17() {
+        List<Sc> scList = scMapper.selectAll();
+        scList.stream().filter(sc -> sc.getCid().equals("03")).filter(sc -> sc.getScore() > 85).collect(Collectors.toList());
+        long count = scList.stream().filter(sc -> sc.getSid().equals("03")).count();
+
+    }
+
+    /**
+     * 查询各科成绩前三名的记录
+     */
+    @Test
+    void T18() {
+        List<Sc> scList = scMapper.selectAll();
+        List<Sc> scList1 = scList.stream().filter(sc -> sc.getCid().equals("01")).collect(Collectors.toList());
+        scList1.sort((a, b) -> (b.getScore().compareTo(a.getScore())));
+    }
+
+    /**
+     * 查询每门课程被选修的学生数
+     */
+    @Test
+    void T19() {
+        List<Sc> scList = scMapper.selectAll();
+        long count = scList.stream().filter(sc -> sc.getCid().equals("01")).map(Sc::getSid).count();
+    }
+
+    /**
+     * 查询出只选修两门课程的学生学号和姓名
+     */
+    @Test
+    void T20() {
+
+        List<Student> studentList = studentMapper.selectAll();
+        List<Sc> scList = scMapper.selectAll();
+
+        List<Student> stList = new ArrayList<>();
+        for (Student student : studentList) {
+            int count = (int) scList.stream().filter(sc -> sc.getSid().equals(student.getSid())).map(Sc::getCid).count();
+            if (count == 2) {
+                stList.add(student);
+            }
+
+        }
+    }
+
+    /**
+     * 查询男生、女生人数
+     */
+    @Test
+    void T21() {
+        List<Student> studentList = studentMapper.selectAll();
+        List<Student> studentList1 = studentList.stream().filter(student -> student.getSsex().equals("男")).collect(Collectors.toList());
+
+    }
+
+    /**
+     * 查询名字中含有「风」字的学生信息
+     */
+    @Test
+    void T22() {
+        List<Student> studentList = studentMapper.selectAll();
+        List<Student> studentList1 = studentList.stream().filter(student -> student.getSname().contains("风")).collect(Collectors.toList());
+
+    }
+
+    /**
+     * 查询同名同性学生名单，并统计同名人数
+     */
+    @Test
+    void T23() {
+        List<Student> students = studentMapper.selectAll();
+        int count = 0;
+        Set set = new HashSet<>();
+        List<Student> studentList = null;
+        for (Student student : students) {
+            String s = student.getSname() + student.getSsex();
+            set.add(s);
+            ++count;
+            if (count != set.size()) {
+                studentList.add(student);
+                --count;
+            }
+        }
+    }
+
+    /**
+     * 查询 1990 年出生的学生名单查询 1990 年出生的学生名单
+     */
+    @Test
+    void T24() {
+
+
+    }
+
+    /**
+     * TODO
+     *  查询每门课程的平均成绩，结果按平均成绩降序排列，平均成绩相同时，按课程编号升序排列
+     */
+    @Test
+    void T25() {
+    }
+
+    /**
+     * 查询平均成绩大于等于 85 的所有学生的学号、姓名和平均成绩
+     */
+    @Test
+    void T26() {
+    }
+
+
+    @Test
+    void T27() {
+    }
+
+    @Test
+    void T28() {
+    }
+
+    @Test
+    void T29() {
+    }
+
+    @Test
+    void T30() {
+    }
+
+    @Test
+    void T31() {
+    }
+
+    @Test
+    void T32() {
+    }
+
+    @Test
+    void T33() {
+    }
+
+    @Test
+    void T34() {
+    }
+
+    /**
+     * 查询不同课程成绩相同的学生的学生编号、课程编号、学生成绩
+     */
+    @Test
+    void T35() {
+    }
+
+    @Test
+    void T36() {
+    }
+
+    @Test
+    void T37() {
+    }
 }
