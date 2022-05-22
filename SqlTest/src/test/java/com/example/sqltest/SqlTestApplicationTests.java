@@ -360,6 +360,7 @@ class SqlTestApplicationTests {
 
     /**
      * 查询和" 01 "号的同学学习的课程 完全相同的其他同学的信息
+     * 信息
      */
     @Test
     void t9() {
