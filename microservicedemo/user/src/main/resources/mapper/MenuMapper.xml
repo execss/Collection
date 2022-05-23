@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.user.mbg.mapper.MenuMapper">
+  <resultMap id="BaseResultMap" type="com.example.user.mbg.entity.Menu">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="path_method" jdbcType="VARCHAR" property="pathMethod" />
+    <result column="css" jdbcType="VARCHAR" property="css" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="type" jdbcType="BIT" property="type" />
+    <result column="hidden" jdbcType="BIT" property="hidden" />
+    <result column="tenant_id" jdbcType="VARCHAR" property="tenantId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.user.mbg.entity.Menu">
+    insert into sys_menu (id, parent_id, `name`, 
+      url, `path`, path_method, 
+      css, sort, create_time, 
+      update_time, `type`, hidden, 
+      tenant_id)
+    values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{pathMethod,jdbcType=VARCHAR}, 
+      #{css,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{type,jdbcType=BIT}, #{hidden,jdbcType=BIT}, 
+      #{tenantId,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.user.mbg.entity.Menu">
+    update sys_menu
+    set parent_id = #{parentId,jdbcType=INTEGER},
+      `name` = #{name,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      `path` = #{path,jdbcType=VARCHAR},
+      path_method = #{pathMethod,jdbcType=VARCHAR},
+      css = #{css,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      `type` = #{type,jdbcType=BIT},
+      hidden = #{hidden,jdbcType=BIT},
+      tenant_id = #{tenantId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, parent_id, `name`, url, `path`, path_method, css, sort, create_time, update_time, 
+    `type`, hidden, tenant_id
+    from sys_menu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, parent_id, `name`, url, `path`, path_method, css, sort, create_time, update_time, 
+    `type`, hidden, tenant_id
+    from sys_menu
+  </select>
+</mapper>

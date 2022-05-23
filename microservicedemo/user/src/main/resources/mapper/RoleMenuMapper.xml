@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.user.mbg.mapper.RoleMenuMapper">
+    <resultMap id="BaseResultMap" type="com.example.user.mbg.entity.RoleMenu">
+        <id column="role_id" jdbcType="INTEGER" property="roleId"/>
+        <id column="menu_id" jdbcType="INTEGER" property="menuId"/>
+    </resultMap>
+
+    <resultMap id="MenuMap" type="com.example.user.model.vo.MenuVO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="path" jdbcType="VARCHAR" property="path"/>
+        <result column="path_method" jdbcType="VARCHAR" property="pathMethod"/>
+        <result column="css" jdbcType="VARCHAR" property="css"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="type" jdbcType="BIT" property="type"/>
+        <result column="hidden" jdbcType="BIT" property="hidden"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="map">
+        delete
+        from sys_role_menu
+        where role_id = #{roleId,jdbcType=INTEGER}
+          and menu_id = #{menuId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.example.user.mbg.entity.RoleMenu">
+        insert into sys_role_menu (role_id, menu_id)
+        values (#{roleId,jdbcType=INTEGER}, #{menuId,jdbcType=INTEGER})
+    </insert>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select role_id, menu_id
+        from sys_role_menu
+    </select>
+
+
+    <select id="findMenusByRoleCodes" resultType="com.example.user.mbg.entity.Menu">
+        select distinct t.*
+        from sys_menu t
+                 inner join sys_role_menu r on r.menu_id = t.id
+                 inner join sys_role rl on rl.id = r.role_id
+        where rl.code in ("ADMIN")
+          and t.type = 1
+          and t.hidden = 0
+        ORDER BY sort ASC
+    </select>
+
+    <select id="findMenuVOsByRoleCodes" resultMap="MenuMap">
+        select distinct t.*
+        from sys_menu t
+                 inner join sys_role_menu r on r.menu_id = t.id
+                 inner join sys_role rl on rl.id = r.role_id
+        where rl.code in ("ADMIN")
+          and t.type = 1
+          and t.hidden = 0
+        ORDER BY sort ASC
+    </select>
+    <select id="findMenusByRoleIds" resultMap="MenuMap">
+        select distinct t.*
+        from sys_menu t
+                 inner join sys_role_menu r on r.menu_id = t.id
+        where r.role_id in (1)
+          and t.type = 2
+        ORDER BY sort ASC
+    </select>
+
+</mapper>
