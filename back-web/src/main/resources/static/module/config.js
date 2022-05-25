@@ -4,6 +4,7 @@ layui.define(function (exports) {
      */
     //默认地址
     var defUrl = 'http://127.0.0.1:9900/';
+    var defUrl_ = 'http://127.0.0.1:19900/';
     //当前环境的api地址
     var apiUrl;
     try{
@@ -16,7 +17,7 @@ layui.define(function (exports) {
         apiUrl = defUrl;
     }
     var config = {
-        base_server: apiUrl,
+        base_server: defUrl_,
         tableName: 'easyweb',  // 存储表名
         clientId: 'webApp', // 应用id
         isolationVersion: '', // 隔离版本

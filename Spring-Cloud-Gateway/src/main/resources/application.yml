@@ -1,45 +1,45 @@
 server:
-  port: 9900
+  port: 19900
 spring:
   application:
-    name: sc-gateway
+    name: gateway
   cloud:
     nacos:
       server-addr: 192.168.1.11:8848
     gateway:
       routes:
         - id: auth
-          uri: http://127.0.0.1:8000/**
+          uri: lb://auth0
           predicates:
             - Path=/api-uaa/**
           filters:
             - StripPrefix=1
             - PreserveHostHeader
         - id: auth1
-          uri: http://127.0.0.1:8000/**
+          uri: lb://auth0
           predicates:
             - Path=/oauth/token
           filters:
             - PreserveHostHeader
         - id: auth0
-          uri: http://127.0.0.1:8000/**
+          uri: lb://auth0
           predicates:
             - Path=/validata/code/**
         - id: user
-          uri: http://127.0.0.1:7000/**
+          uri: lb://user
           predicates:
             - Path=/api-user/**
           filters:
             - StripPrefix=1
         - id: origin0
-          uri: http://127.0.0.1:7000/**
+          uri: lb://user
           predicates:
             - Path=/api-user/users/current
         - id: origin1
-          uri: http://127.0.0.1:7000/**
+          uri: lb://user
           predicates:
             - Path=/api-user/menus/current
         - id: origin2
-          uri: http://127.0.0.1:7000/**
+          uri: lb://user
           predicates:
             - Path=/api-log/requestStat

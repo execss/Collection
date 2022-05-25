@@ -1,8 +1,6 @@
 package com.example.user.model.vo;
 
 import com.example.user.mbg.entity.Role;
-import com.example.user.model.dto.RoleDTO;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,13 +8,13 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class UserVO {
-
+@NoArgsConstructor
+public class LoginUserVO {
     private Long id;
     private Date createTime;
     private Date updateTime;
@@ -29,9 +27,15 @@ public class UserVO {
     private Boolean enabled;
     private String type;
     private String openId;
-    private List<RoleDTO> roleDTOs;
+    private List<Role> roles;
     private String roleId;
     private String oldPassword;
     private String newPassword;
+    private Set<String> permissions;
+    private String userId;
+    private Boolean accountNonExpired;
+    private Boolean accountNonLocked;
+    private Boolean credentialsNonExpired;
     private Boolean del;
+
 }
