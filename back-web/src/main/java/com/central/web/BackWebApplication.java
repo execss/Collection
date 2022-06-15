@@ -9,6 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BackWebApplication {
 	public static void main(String[] args) {
+
+		System.setProperty("apollo.config-service", "http://ip:7000");
+
 		SpringApplication.run(BackWebApplication.class, args);
 	}
 }
